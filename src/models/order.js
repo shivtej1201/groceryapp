@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Counter from "./counter.js"; // Assuming you have a counter model for generating unique IDs
 
 const orderSchema = new mongoose.Schema({
   orderId: {

@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 
+// Base user schema (common fields)
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    role: {
-      type: String,
-      enum: ["Customer", "Admin", "DeliveryPartner"],
-      required: true,
-    },
-    isActivated: {
-      type: Boolean,
-      default: false,
-    },
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["Customer", "Admin", "DeliveryPartner"],
+    required: true,
+  },
+  isActivated: {
+    type: Boolean,
+    default: false,
   },
 });
 
-//Customer Schema
+// Customer Schema
 const customerSchema = new mongoose.Schema({
   ...userSchema.obj,
   phone: {

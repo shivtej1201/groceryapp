@@ -5,9 +5,9 @@ import {
   getOrders,
   updateOrderStatus,
 } from "../controllers/order/order.js";
-import { verifyToken } from "../middlewares/auth.js";
+import { verifyToken } from "../middleware/auth.js";
 
-export default async function (fastify, options) {
+export const orderRoutes = async (fastify, options) => {
   fastify.addHook("preHandler", async (req, reply) => {
     const isAuthenticated = await verifyToken(req, reply);
     if (!isAuthenticated) {
@@ -22,4 +22,4 @@ export default async function (fastify, options) {
   fastify.get("/order/:orderId", getOrderById);
 
   // Add more routes as needed
-}
+};

@@ -5,15 +5,17 @@ import {
   refreshToken,
 } from "../controllers/auth/auth.js";
 
-import { verifyToken } from "../middlewares/auth.js";
+import { verifyToken } from "../middleware/auth.js";
 import { updateUser } from "../controllers/tracking/user.js";
+import fastifyPlugin from "fastify-plugin";
 
-export default async function (fastify, options) {
+// 🔧 Rename the inner function to avoid naming collision
+async function authRoutesPlugin(fastify, options) {
   fastify.post("/customer/login", loginCustomer);
   fastify.post("/delivery/login", loginDeliveryPartner);
   fastify.get("/refresh-token", refreshToken);
   fastify.get("/user", { preHandler: [verifyToken] }, fetchUser);
   fastify.patch("/user", { preHandler: [verifyToken] }, updateUser);
-
-  // Add more routes as needed
 }
+
+export const authRoutes = fastifyPlugin(authRoutesPlugin);
